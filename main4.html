@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Financial Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url(bg.jpg); /* Add your image path here */
+            background-size: cover; /* Cover the entire background */
+            height: 100vh; /* Full viewport height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%; /* Full width */
+            max-width: 800px;
+            padding: 20px;
+            background-color: rgb(39, 138, 149);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: auto; /* In case the content overflows */
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            opacity: 0.8;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        label, input, select {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #0000fe;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Financial Management</h1>
+        <form action="#" method="post" id="financialForm">
+            <label for="foodExpense">Food Expense:</label>
+            <input type="number" id="foodExpense" name="item1" placeholder="Amount spent" required>
+            <label><input type="checkbox" name="necessary1"> Is it necessary?</label>
+
+            <label for="transportExpense">Transport Expense:</label>
+            <input type="number" id="transportExpense" name="item2" placeholder="Amount spent" required>
+            <label><input type="checkbox" name="necessary2"> Is it necessary?</label>
+
+            <label for="stationeryExpense">Stationery Expense:</label>
+            <input type="number" id="stationeryExpense" name="item3" placeholder="Amount spent" required>
+            <label><input type="checkbox" name="necessary3"> Is it necessary?</label>
+
+            <label for="otherExpenses">Other Expenses:</label>
+            <input type="number" id="otherExpenses" name="item4" placeholder="Amount spent" required>
+            <label><input type="checkbox" name="necessary4"> Is it necessary?</label>
+
+            <input type="submit" value="Submit">
+        </form>
+        <div id="monthlyAverage">
+            <h2>Daily Average Spending</h2>
+            <p id="totalSpending"></p>
+            <p id="necessarySpending"></p>
+            <p id="unnecessarySpending"></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('financialForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const foodExpense = parseFloat(document.getElementById('foodExpense').value);
+            const transportExpense = parseFloat(document.getElementById('transportExpense').value);
+            const stationeryExpense = parseFloat(document.getElementById('stationeryExpense').value);
+            const otherExpenses = parseFloat(document.getElementById('otherExpenses').value);
+
+            const necessary1 = document.querySelector('input[name="necessary1"]').checked;
+            const necessary2 = document.querySelector('input[name="necessary2"]').checked;
+            const necessary3 = document.querySelector('input[name="necessary3"]').checked;
+            const necessary4 = document.querySelector('input[name="necessary4"]').checked;
+
+            const totalSpending = foodExpense + transportExpense + stationeryExpense + otherExpenses;
+            const necessarySpending = (necessary1 ? foodExpense : 0) + (necessary2 ? transportExpense : 0) + 
+                                      (necessary3 ? stationeryExpense : 0) + (necessary4 ? otherExpenses : 0);
+            const unnecessarySpending = totalSpending - necessarySpending;
+
+            document.getElementById('totalSpending').textContent = `Total Spending: ₹${totalSpending.toFixed(2)}`;
+            document.getElementById('necessarySpending').textContent = `Daily Average Necessary Spending: ₹${(necessarySpending / 30).toFixed(2)}`;
+            document.getElementById('unnecessarySpending').textContent = `Daily Average Unnecessary Spending: ₹${(unnecessarySpending / 30).toFixed(2)}`;
+        });
+    </script>
+</body>
+</html>
